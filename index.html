@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#09090d">
+  <meta name="description" content="Khushflix — your personal cinema discovery experience.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.svg" type="image/svg+xml">
+  <title>Khushflix — Your Cinema</title>
+  <style>
+    :root{color-scheme:dark;--bg:#09090d;--panel:#14141b;--panel2:#1c1c25;--muted:#a5a5b1;--text:#f7f7fb;--red:#e50914;--line:#292933;--gold:#f5c451}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+    button,input,select{font:inherit}button{cursor:pointer}.topbar{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;position:sticky;top:0;z-index:20;background:rgba(9,9,13,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.05)}
+    .brand{font-weight:950;letter-spacing:-1.5px;font-size:25px;color:#fff;text-decoration:none}.brand span{color:var(--red)}.top-actions{display:flex;gap:10px;align-items:center}.iconbtn{border:1px solid var(--line);background:#15151c;color:white;width:39px;height:39px;border-radius:50%;font-size:17px}
+    .hero{min-height:490px;position:relative;display:flex;align-items:flex-end;padding:52px 5vw 42px;overflow:hidden;background:linear-gradient(90deg,#09090d 0%,rgba(9,9,13,.88) 33%,rgba(9,9,13,.22) 100%),linear-gradient(0deg,#09090d 0%,transparent 58%),url('https://image.tmdb.org/t/p/original/8b8R8l88Qje9dn9OE8PY3Z3Q7X8.jpg') center 28%/cover no-repeat}
+    .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,9,13,.72),transparent 80%);pointer-events:none}.hero-content{position:relative;z-index:1;max-width:620px}.eyebrow{font-size:11px;letter-spacing:2.2px;color:#ff7278;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(38px,7vw,70px);line-height:.98;letter-spacing:-2px;margin:12px 0}.hero p{color:#d1d1d8;line-height:1.55;max-width:560px;font-size:15px}.meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:#c7c7d0;font-size:13px;margin:14px 0}.rating{color:var(--gold);font-weight:800}.pill{border:1px solid #55545f;border-radius:5px;padding:4px 7px;font-size:11px;color:#eee}.hero-buttons{display:flex;gap:10px;margin-top:20px}.primary,.secondary{border:0;border-radius:7px;padding:12px 17px;font-weight:800}.primary{background:var(--red);color:white}.secondary{background:rgba(255,255,255,.14);color:white;border:1px solid rgba(255,255,255,.16)}
+    main{padding:0 5vw}.toolbar{display:flex;gap:9px;overflow:auto;padding:20px 0 4px;scrollbar-width:none}.toolbar::-webkit-scrollbar{display:none}.chip{white-space:nowrap;background:#17171f;color:#ddd;border:1px solid #30303b;padding:9px 13px;border-radius:22px;font-size:12px}.chip.active{background:#fff;color:#111;border-color:white;font-weight:800}
+    .section{margin:29px 0 34px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section h2{font-size:20px;margin:0;letter-spacing:-.4px}.seeall{color:#aaaab5;font-size:12px;background:none;border:0}
+    .rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(125px,16vw,190px);gap:13px;overflow-x:auto;padding:2px 1px 12px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#3a3a44 transparent}.movie{min-width:0;scroll-snap-align:start;cursor:pointer}.poster-wrap{position:relative;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:linear-gradient(145deg,#29293a,#101018);border:1px solid rgba(255,255,255,.08)}.poster-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}.movie:hover img{transform:scale(1.045)}.poster-fallback{height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-weight:900;font-size:20px;letter-spacing:-.5px;background:radial-gradient(circle at 30% 20%,#4a2432,#171722 65%,#09090d)}.score{position:absolute;left:8px;top:8px;background:rgba(0,0,0,.78);padding:5px 7px;border-radius:5px;font-size:11px;color:var(--gold);font-weight:800}.save{position:absolute;right:8px;top:8px;border:0;background:rgba(0,0,0,.75);color:#fff;width:30px;height:30px;border-radius:50%;font-size:16px}.movie-title{font-size:13px;font-weight:750;margin:9px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.movie-sub{font-size:11px;color:var(--muted)}
+    .empty{padding:25px;border:1px dashed #41414b;border-radius:12px;color:#aaa;text-align:center;line-height:1.5}.footer{padding:25px 5vw 35px;color:#777;font-size:11px;line-height:1.6;border-top:1px solid var(--line);margin-top:35px}
+    .bottomnav{position:fixed;bottom:0;left:0;right:0;z-index:25;display:flex;justify-content:space-around;background:rgba(15,15,21,.96);backdrop-filter:blur(16px);border-top:1px solid var(--line);padding:10px 8px calc(10px + env(safe-area-inset-bottom))}.navitem{border:0;background:none;color:#8f8f9b;font-size:10px;display:flex;flex-direction:column;gap:4px;align-items:center;min-width:58px}.navitem b{font-size:19px;font-weight:500}.navitem.active{color:#fff}
+    .overlay{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.78);display:none;align-items:flex-end;justify-content:center}.overlay.show{display:flex}.sheet{width:min(760px,100%);max-height:94vh;overflow:auto;background:#111118;border:1px solid #30303a;border-radius:18px 18px 0 0;padding:20px 20px calc(25px + env(safe-area-inset-bottom));position:relative}.close{position:absolute;right:15px;top:15px;width:36px;height:36px;border-radius:50%;border:0;background:#292932;color:white;font-size:20px}.detailtop{display:grid;grid-template-columns:130px 1fr;gap:17px;padding-right:35px}.detailtop img{width:100%;border-radius:9px;aspect-ratio:2/3;object-fit:cover}.detail h2{font-size:25px;line-height:1.05;margin:4px 0 9px}.detail p{font-size:13px;line-height:1.55;color:#c6c6cf}.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.detail-actions button{padding:10px 13px}.provider-list{display:flex;gap:8px;flex-wrap:wrap}.provider{background:#24242e;padding:9px 11px;border-radius:8px;font-size:12px;color:#eee}
+    .searchbox{display:flex;gap:8px;margin:20px 0}.searchbox input,.settings input{width:100%;background:#1a1a23;border:1px solid #383844;color:white;border-radius:9px;padding:13px;outline:none}.searchbox input:focus,.settings input:focus{border-color:#888}.settings{display:grid;gap:13px}.settings label{font-size:12px;color:#c9c9d1;display:grid;gap:7px}.hint{font-size:11px;color:#999;line-height:1.5}.status{font-size:12px;color:#9fe0ad}.hidden{display:none!important}
+    @media(min-width:800px){.hero{min-height:590px}.overlay{align-items:center}.sheet{border-radius:18px}.detailtop{grid-template-columns:180px 1fr}.bottomnav{display:none}body{padding-bottom:0}}
+    @media(max-width:520px){.topbar{height:59px;padding:0 18px}.brand{font-size:23px}.hero{min-height:440px;padding:38px 20px 30px;background-position:58% center}main{padding:0 18px}.hero p{font-size:13px}.section h2{font-size:18px}.rail{grid-auto-columns:126px}.detailtop{grid-template-columns:105px 1fr;gap:12px}.detail h2{font-size:20px}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#" aria-label="Khushflix home">KHUSH<span>FLIX</span></a>
+  <div class="top-actions">
+    <button class="iconbtn" id="searchOpen" aria-label="Search">⌕</button>
+    <button class="iconbtn" id="settingsOpen" aria-label="Settings">⚙</button>
+  </div>
+</header>
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="eyebrow">KHUSHFLIX ORIGINAL EXPERIENCE</div>
+    <h1 id="heroTitle">Your next<br>movie night.</h1>
+    <div class="meta"><span class="pill">PERSONAL CINEMA</span><span>Discover something great</span></div>
+    <p id="heroOverview">A hand-picked movie universe, organised around the films you love. Connect your movie catalogue to bring real posters, ratings and descriptions to life.</p>
+    <div class="hero-buttons">
+      <button class="primary" id="exploreBtn">Explore movies</button>
+      <button class="secondary" id="heroSearchBtn">⌕ Search</button>
+    </div>
+  </div>
+</section>
+<main>
+  <div class="toolbar" id="filters">
+    <button class="chip active" data-filter="all">For you</button>
+    <button class="chip" data-filter="popular">Popular</button>
+    <button class="chip" data-filter="top">Top rated</button>
+    <button class="chip" data-filter="action">Action</button>
+    <button class="chip" data-filter="scifi">Sci-Fi</button>
+    <button class="chip" data-filter="drama">Drama</button>
+    <button class="chip" data-filter="watchlist">My watchlist</button>
+  </div>
+  <section class="section" id="popularSection">
+    <div class="section-head"><h2 id="sectionTitle">Trending on Khushflix</h2><button class="seeall" id="refreshBtn">Refresh ↻</button></div>
+    <div class="rail" id="movieRail"></div>
+  </section>
+  <section class="section" id="topSection">
+    <div class="section-head"><h2>Highly rated</h2><span class="movie-sub">Sorted by rating</span></div>
+    <div class="rail" id="topRail"></div>
+  </section>
+  <section class="section" id="watchSection">
+    <div class="section-head"><h2>Continue exploring</h2><span class="movie-sub">Your personal collection</span></div>
+    <div class="empty" id="connectPrompt">Your movie shelves are waiting. Add a TMDB API key in Settings to load live movie posters, descriptions and ratings. You can also explore the sample titles below.</div>
+  </section>
+</main>
+<footer class="footer">
+  <strong style="color:#bbb">KHUSHFLIX</strong> · Your cinema. Your collection.<br>
+  Movie metadata and images can be powered by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB. Ratings shown from TMDB are not IMDb ratings. Optional IMDb ratings require a separate licensed data source.
+</footer>
+<nav class="bottomnav">
+  <button class="navitem active" data-goto="hero"><b>⌂</b>Home</button>
+  <button class="navitem" id="navSearch"><b>⌕</b>Search</button>
+  <button class="navitem" data-filter="watchlist"><b>♡</b>Watchlist</button>
+  <button class="navitem" id="navSettings"><b>⚙</b>Settings</button>
+</nav>
+
+<div class="overlay" id="searchOverlay"><div class="sheet">
+  <button class="close" data-close>×</button><h2>Find your next favourite</h2>
+  <div class="searchbox"><input id="searchInput" placeholder="Search movies, actors, titles…" autocomplete="off"><button class="primary" id="searchBtn">Search</button></div>
+  <div id="searchResults" class="rail"></div>
+  <p class="hint">Search uses the movie catalogue connected in Settings. Try a title such as Interstellar or Dune.</p>
+</div></div>
+<div class="overlay" id="detailOverlay"><div class="sheet detail">
+  <button class="close" data-close>×</button><div id="detailContent"></div>
+</div></div>
+<div class="overlay" id="settingsOverlay"><div class="sheet">
+  <button class="close" data-close>×</button><h2>Khushflix settings</h2>
+  <div class="settings">
+    <label>TMDB API key (v3 auth key)<input id="tmdbKey" type="password" placeholder="Paste your TMDB API key"></label>
+    <p class="hint">Get a personal API key from themoviedb.org → Settings → API. This key stays in this browser's local storage. Because this is a static personal app, anyone you share the deployed site with could inspect API requests. Don't use a private or sensitive key.</p>
+    <label>Region for streaming-provider availability<input id="region" maxlength="2" value="IN" placeholder="IN"></label>
+    <button class="primary" id="saveSettings">Save and connect</button>
+    <button class="secondary" id="clearSettings">Disconnect / clear key</button>
+    <div id="settingsStatus" class="hint"></div>
+  </div>
+</div></div>
+
+<script>
+const IMG='https://image.tmdb.org/t/p/';
+const sample=[
+ {id:'s1',title:'Interstellar',year:'2014',rating:8.7,poster:'/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',overview:'A team of explorers travels beyond this galaxy to discover whether mankind has a future among the stars.',genre:'Sci-Fi',runtime:'2h 49m'},
+ {id:'s2',title:'Dune: Part Two',year:'2024',rating:8.5,poster:'/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg',overview:'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.',genre:'Sci-Fi',runtime:'2h 46m'},
+ {id:'s3',title:'Oppenheimer',year:'2023',rating:8.3,poster:'/ptpr0kGAckfQkJeJIt8st5dglvd.jpg',overview:'The story of J. Robert Oppenheimer and his role in the development of the atomic bomb.',genre:'Drama',runtime:'3h'},
+ {id:'s4',title:'The Batman',year:'2022',rating:7.8,poster:'/74xTEgt7R36Fpooo50r9T25onhq.jpg',overview:'Batman ventures into Gotham City’s underworld when a sadistic killer leaves behind a trail of cryptic clues.',genre:'Action',runtime:'2h 56m'},
+ {id:'s5',title:'Spider-Man: Across the Spider-Verse',year:'2023',rating:8.6,poster:'/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg',overview:'Miles Morales is catapulted across the Multiverse, where he encounters a team of Spider-People.',genre:'Action',runtime:'2h 20m'},
+ {id:'s6',title:'Avatar: The Way of Water',year:'2022',rating:7.5,poster:'/t6HIqrRAclMCA60NsSmeqe9ten.jpg',overview:'Jake Sully and Neytiri protect their family and find a new home among the ocean clans of Pandora.',genre:'Sci-Fi',runtime:'3h 12m'}
+];
+let movies=[...sample],watchlist=JSON.parse(localStorage.getItem('khushflix-watchlist')||'[]'),filter='all',apiKey=localStorage.getItem('khushflix-tmdb-key')||'',region=localStorage.getItem('khushflix-region')||'IN';
+const $=id=>document.getElementById(id);
+function posterUrl(path,size='w500'){return path?IMG+size+path:''}
+function safe(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function movieCard(m){const saved=watchlist.includes(String(m.id));return `<article class="movie" data-id="${safe(m.id)}"><div class="poster-wrap">${m.poster_path||m.poster?`<img loading="lazy" src="${posterUrl(m.poster_path||m.poster)}" alt="${safe(m.title)} poster" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:''}<div class="poster-fallback" style="${m.poster_path||m.poster?'display:none':''}">${safe(m.title)}</div><span class="score">★ ${Number(m.vote_average??m.rating??0).toFixed(1)}</span><button class="save" data-save="${safe(m.id)}" aria-label="Save to watchlist">${saved?'♥':'＋'}</button></div><div class="movie-title">${safe(m.title||m.name)}</div><div class="movie-sub">${(m.release_date||m.year||'').slice(0,4)} · ${safe((m.genre||'MOVIE'))}</div></article>`}
+function render(){let list=[...movies];if(filter==='top')list.sort((a,b)=>(b.vote_average??b.rating??0)-(a.vote_average??a.rating??0));if(filter==='watchlist')list=list.filter(m=>watchlist.includes(String(m.id)));if(['action','scifi','drama'].includes(filter))list=list.filter(m=>(m.genre||'').toLowerCase().includes(filter==='scifi'?'sci':filter));$('sectionTitle').textContent=filter==='watchlist'?'My watchlist':filter==='top'?'Top rated movies':filter==='all'?'Trending on Khushflix':filter[0].toUpperCase()+filter.slice(1)+' movies';$('movieRail').innerHTML=list.length?list.map(movieCard).join(''):'<div class="empty">Nothing here yet. Save a movie to your watchlist or connect your catalogue.</div>';let top=[...movies].sort((a,b)=>(b.vote_average??b.rating??0)-(a.vote_average??a.rating??0)).slice(0,10);$('topRail').innerHTML=top.map(movieCard).join('');$('watchSection').classList.toggle('hidden',filter==='watchlist');}
+function showOverlay(id){$(id).classList.add('show')}
+function closeOverlays(){$$('.overlay').forEach(x=>x.classList.remove('show'))}
+function $$(s){return [...document.querySelectorAll(s)]}
+function setFilter(f){filter=f;$$('.chip').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));$$('.navitem').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));render();$('popularSection').scrollIntoView({behavior:'smooth',block:'start'})}
+function toggleSave(id){id=String(id);watchlist=watchlist.includes(id)?watchlist.filter(x=>x!==id):[...watchlist,id];localStorage.setItem('khushflix-watchlist',JSON.stringify(watchlist));render();$$('[data-save]').forEach(b=>{if(b.dataset.save===id)b.textContent=watchlist.includes(id)?'♥':'＋'})}
+async function api(path){if(!apiKey)throw new Error('Add your TMDB API key in Settings first.');let r=await fetch('https://api.themoviedb.org/3'+path+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(apiKey));if(!r.ok)throw new Error('TMDB request failed ('+r.status+'). Check your API key and try again.');return r.json()}
+async function connect(){try{$('settingsStatus').textContent='Connecting to TMDB…';let data=await api('/trending/movie/week?language=en-US');movies=data.results||[];render();$('connectPrompt').textContent='Connected to TMDB. Live posters, movie descriptions and TMDB ratings are now loading.';$('settingsStatus').innerHTML='<span class="status">Connected successfully.</span>';closeOverlays()}catch(e){$('settingsStatus').textContent=e.message}}
+async function searchMovies(){let q=$('searchInput').value.trim();if(!q)return;$('searchResults').innerHTML='<div class="hint">Searching…</div>';try{let d=await api('/search/movie?query='+encodeURIComponent(q)+'&include_adult=false&language=en-US&page=1');$('searchResults').innerHTML=(d.results||[]).map(movieCard).join('')||'<div class="empty">No results found.</div>'}catch(e){$('searchResults').innerHTML='<div class="empty">'+safe(e.message)+'</div>'}}
+async function openMovie(id){let m=movies.find(x=>String(x.id)===String(id))||sample.find(x=>String(x.id)===String(id));if(!m)return;let title=m.title||m.name,year=(m.release_date||m.year||'').slice(0,4),rating=Number(m.vote_average??m.rating??0).toFixed(1);$('detailContent').innerHTML=`<div class="detailtop"><img src="${posterUrl(m.poster_path||m.poster)}" alt="${safe(title)} poster" onerror="this.style.opacity=.2"><div><div class="eyebrow">MOVIE DETAILS</div><h2>${safe(title)}</h2><div class="meta"><span class="rating">★ ${rating} <small style="color:#aaa">TMDB</small></span><span>${safe(year)}</span><span>${safe(m.runtime||'')}</span></div><p>${safe(m.overview||'No synopsis available.')}</p><div class="detail-actions"><button class="primary" id="detailSave">${watchlist.includes(String(id))?'♥ Saved':'＋ Watchlist'}</button></div></div></div><hr style="border:0;border-top:1px solid #333;margin:20px 0"><h3>Where to watch</h3><p class="hint">Checking official streaming availability for your region (${safe(region)}).</p><div id="providers" class="provider-list"><span class="provider">Loading providers…</span></div><p class="hint" style="margin-top:18px">Language and video-quality labels are not inferred from the poster or movie metadata. These will only appear when verified catalogue information is connected.</p>`;showOverlay('detailOverlay');$('detailSave').onclick=()=>{toggleSave(id);$('detailSave').textContent=watchlist.includes(String(id))?'♥ Saved':'＋ Watchlist'};if(apiKey&&typeof id==='number'){try{let p=await api('/movie/'+id+'/watch/providers');let country=p.results?.[region];let all=[...(country?.flatrate||[]),...(country?.rent||[]),...(country?.buy||[])];$('providers').innerHTML=all.length?all.map(x=>`<span class="provider">${safe(x.provider_name)}</span>`).join(''):'<span class="provider">No provider listing returned for this region.</span>';if(country?.link)$('providers').innerHTML+=`<a class="provider" style="text-decoration:none" target="_blank" rel="noopener" href="${safe(country.link)}">Official availability ↗</a>`}catch(e){$('providers').innerHTML='<span class="provider">Provider information unavailable.</span>'}}else{$('providers').innerHTML='<span class="provider">Connect TMDB in Settings to check official providers.</span>'}}
+$('filters').addEventListener('click',e=>{let b=e.target.closest('[data-filter]');if(b)setFilter(b.dataset.filter)});
+document.addEventListener('click',e=>{let card=e.target.closest('.movie');let save=e.target.closest('[data-save]');if(save){e.stopPropagation();toggleSave(save.dataset.save);return}if(card)openMovie(card.dataset.id)});
+$$('[data-close]').forEach(b=>b.onclick=closeOverlays);$$('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOverlays()}));
+$('searchOpen').onclick=$('heroSearchBtn').onclick=$('navSearch').onclick=()=>{showOverlay('searchOverlay');setTimeout(()=>$('searchInput').focus(),100)};
+$('settingsOpen').onclick=$('navSettings').onclick=()=>{ $('tmdbKey').value=apiKey;$('region').value=region;showOverlay('settingsOverlay')};
+$('searchBtn').onclick=searchMovies;$('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')searchMovies()});
+$('saveSettings').onclick=()=>{apiKey=$('tmdbKey').value.trim();region=($('region').value.trim()||'IN').toUpperCase();localStorage.setItem('khushflix-tmdb-key',apiKey);localStorage.setItem('khushflix-region',region);connect()};
+$('clearSettings').onclick=()=>{apiKey='';localStorage.removeItem('khushflix-tmdb-key');$('settingsStatus').textContent='API key removed. Sample catalogue remains available.'};
+$('refreshBtn').onclick=()=>apiKey?connect():($('settingsStatus').textContent='Add your TMDB key in Settings to refresh live data.');
+$('exploreBtn').onclick=()=>$('popularSection').scrollIntoView({behavior:'smooth'});
+$$('.navitem[data-goto]').forEach(b=>b.onclick=()=>$(b.dataset.goto).scrollIntoView({behavior:'smooth'}));
+$$('.navitem[data-filter]').forEach(b=>b.onclick=()=>setFilter(b.dataset.filter));
+render();
+if(apiKey)connect();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
